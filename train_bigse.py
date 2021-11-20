@@ -28,7 +28,7 @@ parser.add_argument("--warmup_epoch", default=2, type=int)
 parser.add_argument("--warmup_ratio", default=0.3, type=float)
 parser.add_argument("--batch_size", default=64, type=int)
 parser.add_argument("--device", default="GPU", type=str, choices=['Ascend', 'GPU', 'CPU'])
-parser.add_argument("--device_id", default=6, type=int)
+parser.add_argument("--device_id", default=0, type=int)
 parser.add_argument("--sink_mode", default=True, type=bool)
 args = parser.parse_args()
 
@@ -98,7 +98,7 @@ if __name__ == '__main__':
     loss_logger = get_logger('info', "bigse_loss.txt")
     loss_cb = MyLossMonitor(loss_logger, 1)
     time_cb=TimeMonitor(data_size=steps_per_epoch)
-    
+
     # 训练模型
     print("strat train!")
     model.train(args.total_epochs, train_data, callbacks=[ckpoint, loss_cb, time_cb], dataset_sink_mode=args.sink_mode)
