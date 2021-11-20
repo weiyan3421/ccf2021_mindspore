@@ -98,7 +98,7 @@ def train_data(args, tag="train"):
 
     erasre_op = py_vision.RandomErasing(prob=0.5, scale=(0.02, 0.22), ratio=(0.2, 2.2))
     train_data = train_data.map(operations=erasre_op, input_columns="image")
-    train_data = train_data.batch(args.batch_size, drop_remainder=True, num_parallel_workers=args.num_workers)
+    train_data = train_data.batch(args.batch_size, drop_remainder=args.sink_mode, num_parallel_workers=args.num_workers)
 
     return train_data
 

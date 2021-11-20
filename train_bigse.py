@@ -94,10 +94,11 @@ if __name__ == '__main__':
     else:
         raise ValueError("Unsupported platform.")  
 
-    # 定义保存日志和定义打印loss函数 
+    # 定义保存日志和callback函数 
     loss_logger = get_logger('info', "bigse_loss.txt")
     loss_cb = MyLossMonitor(loss_logger, 1)
     time_cb=TimeMonitor(data_size=steps_per_epoch)
+    
     # 训练模型
     print("strat train!")
     model.train(args.total_epochs, train_data, callbacks=[ckpoint, loss_cb, time_cb], dataset_sink_mode=args.sink_mode)
