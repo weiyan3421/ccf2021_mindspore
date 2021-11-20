@@ -24,7 +24,7 @@ def get_logger(LEVEL, log_file):
 parser = argparse.ArgumentParser(description='model Training')
 parser.add_argument("--batch_size", default=640)
 parser.add_argument("--device", default="GPU", type=str, choices=['Ascend', 'GPU', 'CPU'])
-parser.add_argument("--device_id", default=2, type=int)
+parser.add_argument("--device_id", default=0, type=int)
 parser.add_argument('--num_workers', default=2, type=int)
 parser.add_argument('--num_classes', default=2388, type=int)
 args = parser.parse_args()
@@ -51,7 +51,7 @@ if __name__ == '__main__':
             test_dataset = test_data(args)
             acc = model.eval(test_dataset, dataset_sink_mode=False)
             acc_str =filename + "  {}".format(acc)
-            acc_logger.info(file)
+            # acc_logger.info(file)
             acc_logger.info(acc_str)
             print(acc_str)
 
