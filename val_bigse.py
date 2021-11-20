@@ -32,7 +32,8 @@ args = parser.parse_args()
 if __name__ == '__main__':
     net = net(2388)
     acc_logger = get_logger('info', "acc/bigse_acc.txt")
-    context.set_context(device_target=args.device, device_id=args.device_id)
+    context.set_context(device_target=args.device)
+    # context.set_context(device_target=args.device, device_id=args.device_id)
     for idx, filename in enumerate(os.listdir("ckpt_bigse")):
         # if idx > 5:
         #     break
