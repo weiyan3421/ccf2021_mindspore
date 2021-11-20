@@ -31,13 +31,13 @@ args = parser.parse_args()
 
 if __name__ == '__main__':
     net = net(2388)
-    acc_logger = get_logger('info', "acc/bigse_retry_acc.txt")
+    acc_logger = get_logger('info', "acc/bigse_acc.txt")
     context.set_context(device_target=args.device, device_id=args.device_id)
-    for idx, filename in enumerate(os.listdir("ckpt_bigse_retry")):
+    for idx, filename in enumerate(os.listdir("ckpt_bigse")):
         # if idx > 5:
         #     break
         if filename.endswith("ckpt"):
-            file = os.path.join("ckpt_bigse_retry", filename)
+            file = os.path.join("ckpt_bigse", filename)
             print(file)
             # file = "ckpt_resnet50/smallse-2_10777.ckpt"
             param_dict = load_checkpoint(file)
