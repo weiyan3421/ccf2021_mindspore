@@ -6,7 +6,7 @@ from mindspore import dtype as mstype
 from mindspore import Model, context, FixedLossScaleManager
 from mindspore.train.callback import ModelCheckpoint, CheckpointConfig
 from mindspore import load_checkpoint, load_param_into_net
-from bigse import se_resnet50 as net
+from L-SE import L-SE_resnet50 as net
 import mindspore.nn as nn
 import numpy as np
 from mindspore.common.tensor import Tensor
@@ -27,7 +27,7 @@ parser.add_argument("--total_epochs", default=100, type=int)
 parser.add_argument("--warmup_epoch", default=4, type=int)
 parser.add_argument("--warmup_ratio", default=0.3, type=float)
 parser.add_argument("--batch_size", default=64, type=int)
-parser.add_argument("--device", default="GPU", type=str, choices=['Ascend', 'GPU', 'CPU'])
+parser.add_argument("--device", default="Ascend", type=str, choices=['Ascend', 'GPU', 'CPU'])
 parser.add_argument("--device_id", default=0, type=int)
 parser.add_argument("--sink_mode", default=True, type=bool)
 args = parser.parse_args()
