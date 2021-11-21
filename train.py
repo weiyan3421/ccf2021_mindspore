@@ -20,7 +20,7 @@ import logging
 parser = argparse.ArgumentParser(description='model Training')
 
 parser.add_argument('--num_classes', default=2388, type=int)
-parser.add_argument('--num_workers', default=2, type=int)
+parser.add_argument('--num_workers', default=4, type=int)
 parser.add_argument("--lr", "--learningRate", default=1e-4, type=float)
 parser.add_argument("--momentum", default=0.9, type=float)
 parser.add_argument("--total_epochs", default=100, type=int)
@@ -28,6 +28,7 @@ parser.add_argument("--warmup_epoch", default=4, type=int)
 parser.add_argument("--warmup_ratio", default=0.3, type=float)
 parser.add_argument("--batch_size", default=64, type=int)
 parser.add_argument("--device", default="Ascend", type=str, choices=['Ascend', 'GPU', 'CPU'])
+parser.add_argument("--set_device", default=False, type=bool)
 parser.add_argument("--device_id", default=0, type=int)
 parser.add_argument("--sink_mode", default=True, type=bool)
 args = parser.parse_args()
@@ -60,8 +61,10 @@ def get_logger(LEVEL, log_file):
 
 
 if __name__ == '__main__':
-    # context.set_context(mode=context.GRAPH_MODE, device_target=args.device)
-    context.set_context(mode=context.GRAPH_MODE, device_target=args.device, device_id=args.device_id)
+    if args.set_device :
+        context.set_context(mode=context.GRAPH_MODE, device_target=args.device, device_id=args.device_id)
+    else:
+        context.set_context(mode=context.GRAPH_MODE, device_target=args.device)
     
     net = net(args.num_classes)
     # param_dict = load_checkpoint("ckpt_bigse/bigse_1-16_5373.ckpt")
