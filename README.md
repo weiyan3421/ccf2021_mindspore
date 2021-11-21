@@ -47,7 +47,8 @@ Python所需环境：
     mindspore-gpu==1.5.0
     pillow==6.2.1
 
-# 3.--num_classes      分类数目，默认2388
+# 3.训练超参数
+--num_classes      分类数目，默认2388
 --num_workers      数据处理多线程数，默认4
 --lr               基础学习率，默认1e-4
 --momentum         梯度下降动量值，默认0.9
@@ -78,3 +79,4 @@ GPU V100训练：
     2、指定使用几号卡时训练情况：
     python train.py --device=GPU --set_device=True --device_id=0
     (device_id 为卡号)
+
