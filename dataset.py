@@ -9,9 +9,7 @@ from mindspore.dataset.transforms import c_transforms
 import mindspore.dataset.vision.c_transforms as c_vision
 import mindspore.dataset.vision.py_transforms as py_vision
 
-
-ds.config.set_seed(58)
-
+# ds.config.set_seed(58)
 
 # def get_goods_class():
 #     gas = GAS("Accesskey-f58826765f344863cf230eb3b5db9665")

@@ -18,7 +18,6 @@ import logging
 
 
 parser = argparse.ArgumentParser(description='model Training')
-
 parser.add_argument('--num_classes', default=2388, type=int)
 parser.add_argument('--num_workers', default=4, type=int)
 parser.add_argument("--lr", "--learningRate", default=1e-4, type=float)
@@ -75,7 +74,7 @@ if __name__ == '__main__':
     # 保存模型
     config_ck = CheckpointConfig(save_checkpoint_steps=steps_per_epoch,
                                  keep_checkpoint_max=args.total_epochs)
-    ckpoint = ModelCheckpoint(prefix="bigse", directory="ckpt_bigse", config=config_ck)
+    ckpoint = ModelCheckpoint(prefix="L_SE", directory="ckpt_L_SE", config=config_ck)
 
     # 定义损失函数
     loss = nn.SoftmaxCrossEntropyWithLogits(sparse=True, reduction='mean')
@@ -98,7 +97,7 @@ if __name__ == '__main__':
         raise ValueError("Unsupported platform.")  
 
     # 定义保存日志和callback函数 
-    loss_logger = get_logger('info', "loss/bigse_loss.txt")
+    loss_logger = get_logger('info', "loss/L_SE_loss.txt")
     loss_cb = MyLossMonitor(loss_logger, 1)
     time_cb=TimeMonitor(data_size=steps_per_epoch)
 

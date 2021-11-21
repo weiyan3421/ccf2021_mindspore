@@ -11,8 +11,7 @@ import logging
 
 
 def get_logger(LEVEL, log_file):
-    # head = '[%(asctime)-15s] [%(levelname)s] %(message)s'
-    head = ''
+    head = '[%(asctime)-15s] [%(levelname)s] %(message)s'
     if LEVEL == 'info':
         logging.basicConfig(level=logging.INFO, format=head, filename=log_file)
     elif LEVEL == 'debug':
@@ -21,7 +20,7 @@ def get_logger(LEVEL, log_file):
     return logger
 
 
-parser = argparse.ArgumentParser(description='model Training')
+parser = argparse.ArgumentParser(description='model eval')
 parser.add_argument("--batch_size", default=640)
 parser.add_argument("--device", default="GPU", type=str, choices=['Ascend', 'GPU', 'CPU'])
 parser.add_argument("--device_id", default=0, type=int)
@@ -31,16 +30,15 @@ args = parser.parse_args()
 
 if __name__ == '__main__':
     net = net(2388)
-    acc_logger = get_logger('info', "acc/bigse_acc.txt")
+    acc_logger = get_logger('info', "acc/L_SE_acc.txt")
     context.set_context(device_target=args.device)
     # context.set_context(device_target=args.device, device_id=args.device_id)
-    for idx, filename in enumerate(os.listdir("ckpt_bigse")):
+    for idx, filename in enumerate(os.listdir("ckpt_L_SE")):
         # if idx > 5:
         #     break
         if filename.endswith("ckpt"):
-            file = os.path.join("ckpt_bigse", filename)
+            file = os.path.join("ckpt_L_SE", filename)
             print(file)
-            # file = "ckpt_resnet50/smallse-2_10777.ckpt"
             param_dict = load_checkpoint(file)
             load_param_into_net(net, param_dict)
 
@@ -51,7 +49,6 @@ if __name__ == '__main__':
             test_dataset = test_data(args)
             acc = model.eval(test_dataset, dataset_sink_mode=False)
             acc_str =filename + "  {}".format(acc)
-            # acc_logger.info(file)
             acc_logger.info(acc_str)
             print(acc_str)
 
