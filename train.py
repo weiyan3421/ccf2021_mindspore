@@ -22,9 +22,9 @@ parser = argparse.ArgumentParser(description='model Training')
 parser.add_argument('--num_classes', default=2388, type=int)
 parser.add_argument('--num_workers', default=2, type=int)
 parser.add_argument("--lr", "--learningRate", default=1e-4, type=float)
-parser.add_argument("--momentum", default=0.9)
-parser.add_argument("--total_epochs", default=38, type=int)
-parser.add_argument("--warmup_epoch", default=2, type=int)
+parser.add_argument("--momentum", default=0.9, type=float)
+parser.add_argument("--total_epochs", default=100, type=int)
+parser.add_argument("--warmup_epoch", default=4, type=int)
 parser.add_argument("--warmup_ratio", default=0.3, type=float)
 parser.add_argument("--batch_size", default=64, type=int)
 parser.add_argument("--device", default="GPU", type=str, choices=['Ascend', 'GPU', 'CPU'])
@@ -60,8 +60,8 @@ def get_logger(LEVEL, log_file):
 
 
 if __name__ == '__main__':
-    context.set_context(mode=context.GRAPH_MODE, device_target=args.device)
-    # context.set_context(mode=context.GRAPH_MODE, device_target=args.device, device_id=args.device_id)
+    # context.set_context(mode=context.GRAPH_MODE, device_target=args.device)
+    context.set_context(mode=context.GRAPH_MODE, device_target=args.device, device_id=args.device_id)
     
     net = net(args.num_classes)
     # param_dict = load_checkpoint("ckpt_bigse/bigse_1-16_5373.ckpt")
@@ -78,7 +78,7 @@ if __name__ == '__main__':
     loss = nn.SoftmaxCrossEntropyWithLogits(sparse=True, reduction='mean')
 
     # 初始化学习率和定义优化器
-    lr_scheduler = Tensor(CosineWarmupRestart_2(args, steps_per_epoch, 6), mstype.float32)
+    lr_scheduler = Tensor(CosineWarmupRestart_2(args, steps_per_epoch, 8), mstype.float32)
     opt = nn.SGD(net.trainable_params(), learning_rate=lr_scheduler, momentum=0.9, weight_decay=5e-2, loss_scale=1.0)
     
     # 构建模型
@@ -95,7 +95,7 @@ if __name__ == '__main__':
         raise ValueError("Unsupported platform.")  
 
     # 定义保存日志和callback函数 
-    loss_logger = get_logger('info', "bigse_loss.txt")
+    loss_logger = get_logger('info', "loss/bigse_loss.txt")
     loss_cb = MyLossMonitor(loss_logger, 1)
     time_cb=TimeMonitor(data_size=steps_per_epoch)
 

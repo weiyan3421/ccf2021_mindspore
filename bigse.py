@@ -123,7 +123,6 @@ class Res_SE_Block(nn.Cell):
             out = se * out + identity
 
         out = self.relu(out)
-
         return out
 
 

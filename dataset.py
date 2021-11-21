@@ -107,8 +107,7 @@ def test_data(args, tag="test"):
     test_set = dataset(tag)
     test_data = ds.GeneratorDataset(source=test_set, column_names=["image", "label"],
                                     num_parallel_workers=args.num_workers, shuffle=False)
- #   onehot_op = c_transforms.OneHot(num_classes=args.num_classes)
-#    test_data = test_data.map(operations=onehot_op, input_columns=["label"])
+
     op = c_transforms.TypeCast(mstype.int32)
     test_data = test_data.map(operations=op, input_columns=["label"])
 
@@ -119,7 +118,7 @@ def test_data(args, tag="test"):
     ])
     test_data = test_data.map(operations=c_compose, input_columns=["image"])
 
-    test_data = test_data.batch(args.batch_size, drop_remainder=False, num_parallel_workers=args.num_workers)
+    test_data = test_data.batch(args.batch_size*10, drop_remainder=False, num_parallel_workers=args.num_workers)
 
     return test_data
 
