@@ -183,7 +183,7 @@ class ResNet(nn.Cell):
         return out
 
 
-def L-SE_resnet50(class_num=2388):
+def L_SE_resnet50(class_num=2388):
     return ResNet(block=Res_SE_Block,
                   layer_nums=[3, 4, 6, 3],
                   in_channels=[64, 256, 512, 1024],

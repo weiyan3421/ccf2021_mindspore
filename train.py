@@ -6,7 +6,7 @@ from mindspore import dtype as mstype
 from mindspore import Model, context, FixedLossScaleManager
 from mindspore.train.callback import ModelCheckpoint, CheckpointConfig
 from mindspore import load_checkpoint, load_param_into_net
-from L-SE import L-SE_resnet50 as net
+from L_SE import L_SE_resnet50 as net
 import mindspore.nn as nn
 import numpy as np
 from mindspore.common.tensor import Tensor
