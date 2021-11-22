@@ -56,7 +56,6 @@ class dataset():
         data, label = get_data_path(tag)
         self.data_path = data
         self.label = label
-      
 
     def __len__(self):
         return len(self.data_path)
@@ -68,7 +67,6 @@ class dataset():
             img_RGB = Image.open(image_path).convert('RGB')
         except BaseException:
             print("图片读取发生错误，错误的图片为{},请检查该图片！".format(image_path))
-
 
         label_str = self.label[item]
         label_idx = self.goods_class.index(label_str)

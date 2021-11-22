@@ -1,6 +1,7 @@
 import math
 import numpy as np
 
+
 def linear_warmup_learning_rate(current_step, warmup_steps, base_lr, init_lr):
     lr_inc = (float(base_lr) - float(init_lr)) / float(warmup_steps)
     learning_rate = float(init_lr) + lr_inc * current_step

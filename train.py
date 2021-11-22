@@ -60,19 +60,22 @@ def get_logger(LEVEL, log_file):
 
 
 if __name__ == '__main__':
-    if args.set_device :
+    if args.set_device:
         context.set_context(mode=context.GRAPH_MODE, device_target=args.device, device_id=args.device_id)
     else:
         context.set_context(mode=context.GRAPH_MODE, device_target=args.device)
     
     net = net(args.num_classes)
+
+    # 是否载入模型
     # param_dict = load_checkpoint("ckpt_bigse/bigse_1-16_5373.ckpt")
     # load_param_into_net(net, param_dict)
+
     train_data = train_data(args)
     steps_per_epoch = train_data.get_dataset_size()
 
     # 保存模型
-    config_ck = CheckpointConfig(save_checkpoint_steps=steps_per_epoch,
+    config_ck = CheckpointConfig(save_checkpoint_steps=steps_per_epoch*4,
                                  keep_checkpoint_max=args.total_epochs)
     ckpoint = ModelCheckpoint(prefix="L_SE", directory="ckpt_L_SE", config=config_ck)
 
@@ -99,7 +102,7 @@ if __name__ == '__main__':
     # 定义保存日志和callback函数 
     loss_logger = get_logger('info', "loss/L_SE_loss.txt")
     loss_cb = MyLossMonitor(loss_logger, 1)
-    time_cb=TimeMonitor(data_size=steps_per_epoch)
+    time_cb = TimeMonitor(data_size=steps_per_epoch)
 
     # 训练模型
     print("strat train!")
@@ -111,4 +114,3 @@ if __name__ == '__main__':
     acc_str = "训练{}个epoch后，最后得到{}".format(args.total_epochs, acc)
     loss_logger.info(acc_str)
     print(acc_str)
- 

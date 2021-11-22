@@ -1,4 +1,4 @@
-from bigse import se_resnet50 as net
+from L_SE import L_SE_resnet50 as net
 from mindspore.nn import Accuracy
 from mindspore import load_checkpoint, load_param_into_net
 from mindspore import Model, context
@@ -21,9 +21,9 @@ def get_logger(LEVEL, log_file):
 
 
 parser = argparse.ArgumentParser(description='model eval')
-parser.add_argument("--batch_size", default=640)
+parser.add_argument("--batch_size", default=64,type=int)
 parser.add_argument("--device", default="GPU", type=str, choices=['Ascend', 'GPU', 'CPU'])
-parser.add_argument("--device_id", default=0, type=int)
+parser.add_argument("--device_id", default=1, type=int)
 parser.add_argument('--num_workers', default=4, type=int)
 parser.add_argument('--num_classes', default=2388, type=int)
 args = parser.parse_args()
@@ -34,8 +34,6 @@ if __name__ == '__main__':
     context.set_context(device_target=args.device)
     # context.set_context(device_target=args.device, device_id=args.device_id)
     for idx, filename in enumerate(os.listdir("ckpt_L_SE")):
-        # if idx > 5:
-        #     break
         if filename.endswith("ckpt"):
             file = os.path.join("ckpt_L_SE", filename)
             print(file)
@@ -48,8 +46,6 @@ if __name__ == '__main__':
 
             test_dataset = test_data(args)
             acc = model.eval(test_dataset, dataset_sink_mode=False)
-            acc_str =filename + "  {}".format(acc)
+            acc_str = filename + "  {}".format(acc)
             acc_logger.info(acc_str)
             print(acc_str)
-
-

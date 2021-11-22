@@ -58,7 +58,6 @@ def _fc(in_channel, out_channel):
     return nn.DenseBnAct(in_channel, out_channel, has_bias=True, weight_init=weight, bias_init=0)
 
 
-
 class Res_SE_Block(nn.Cell):
     expansion = 4
 
@@ -190,4 +189,3 @@ def L_SE_resnet50(class_num=2388):
                   out_channels=[256, 512, 1024, 2048],
                   strides=[1, 2, 2, 2],
                   num_classes=class_num)
-
