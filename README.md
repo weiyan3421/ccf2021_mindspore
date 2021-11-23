@@ -1,5 +1,5 @@
 # CCF2021
-基于MindSpore AI框架实现零售商品识别比赛提交代码
+[基于MindSpore AI框架实现零售商品识别](https://www.datafountain.cn/competitions/528)比赛提交代码
 
 # 1.代码目录结构说明
 .  
